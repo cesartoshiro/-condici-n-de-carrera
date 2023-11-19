@@ -1,0 +1,32 @@
+#Pasos del ataque
+#Paso 1: deshabilitar la protección de los symlinks
+sudo sysctl -a | grep fs.protected
+sudo sysctl -w fs.protected_symlinks=0
+sudo sysctl -w fs.protected_regular=0
+
+#Paso 2: Script vulp.c
+gcc vulp.c -o vulp
+sudo chown root vulp
+sudo chmod 4755 vulp
+
+#Validar los permisos
+ls -la
+
+#Paso 3: Script ataqueProceso.c
+gcc ataqueProceso.c -o ataqueProceso
+./ataqueProceso &
+
+#Validar que el proceso esta corriendo
+top
+
+#Paso 4: Script monitorProceso.sh
+./monitorProceso.sh
+
+#Paso 5: En otra pantalla para monitorear que se esta realizando el proceso
+cd /tmp
+ls -la XYZ
+
+#Fin
+
+
+
